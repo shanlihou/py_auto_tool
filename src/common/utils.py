@@ -1,6 +1,7 @@
 import functools
 import cv2
 import global_data
+import pygame
 
 
 def bit_set(value, bit):
@@ -29,4 +30,21 @@ def back_pos_to_screen(pos):
     x = int(pos[0] * _size[0] / _back_size[0])
     y = int(pos[1] * _size[1] / _back_size[1])
     return x, y
+
+
+def get_screen_rect(win_idx, rect_ratio):
+    x, y, w, h = rect_ratio
+    s_w, s_h = global_data.SCREEN_SIZE
+
+    x = int(x * s_w)
+    y = int(y * s_h)
+    w = int(w * s_w)
+    h = int(h * s_h)
+
+    x += win_idx * s_w
+    return x, y, w, h
+
+@functools.lru_cache(maxsize=1)
+def get_font(font_size):
+    return pygame.font.Font('res/Teko-Bold.ttf', font_size)
 

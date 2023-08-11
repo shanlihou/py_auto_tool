@@ -11,7 +11,9 @@ class DisplayHelper(object):
         super().__init__()
         pygame.init()
         global_data.SCREEN_SIZE = (700, 500)
-        screen = pygame.display.set_mode(global_data.SCREEN_SIZE)
+        _size = (1400, 500)
+        # screen = pygame.display.set_mode(_size, pygame.DOUBLEBUF | pygame.OPENGL | pygame.RESIZABLE)
+        screen = pygame.display.set_mode(_size)
 
         pygame.display.set_caption("My Game")
 
@@ -36,10 +38,9 @@ class DisplayHelper(object):
             fix_y = pt[1] * global_data.SCREEN_SIZE[1] / _size[1]
             pygame.draw.rect(self.screen, (255, 0, 0), (fix_x, fix_y, fix_w, fix_h), 1)
 
-
     def run_once(self):
         # 填充窗口颜色
-        self.screen.fill((255, 255, 255))
+        self.screen.fill((0x2e, 0x34, 0x40))
         
         self.draw_capture()
         _ctx = draw_context.DrawContext(self.screen, global_data.SCREEN_SIZE)

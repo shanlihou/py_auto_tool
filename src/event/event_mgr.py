@@ -22,4 +22,7 @@ class EventMgr(object):
                 _pos = pygame.mouse.get_pos()
                 self.trigger(pygame.MOUSEBUTTONDOWN, _pos)
 
+            elif event.type == pygame.KEYDOWN:
+                self.trigger(pygame.KEYDOWN, event.key)
+
 
