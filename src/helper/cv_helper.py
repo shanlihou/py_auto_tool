@@ -17,6 +17,19 @@ def get_target_pos():
 
     return pts
 
+
+def get_pos_color(pos):
+    return global_data.ORIGIN_IMAGE.get_at(pos)
+
+
+def get_color_poses(color):
+    w, h = global_data.SCREEN_IMAGE_SIZE
+    for x in range(w):
+        for y in range(h):
+            if global_data.ORIGIN_IMAGE.get_at((x, y)) == color:
+                yield (x, y)
+
+
 def get_multi_match(target_path, threshold=0.9):
     target = utils.get_cap_target_cv_img(target_path)
 
@@ -28,3 +41,5 @@ def get_multi_match(target_path, threshold=0.9):
         pts.append(pt)
 
     return pts, w, h
+
+

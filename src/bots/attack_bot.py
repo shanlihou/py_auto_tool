@@ -11,16 +11,10 @@ class State(object):
 
 
 class Attack(base_bot.BotBase):
+    _STATE_CLS = State
     def __init__(self):
         super(Attack, self).__init__()
         self._state = State.IDLE
-
-    def tick(self):
-        _name = utils.get_state_name(State, self._state)
-        _func_name = _name.lower() + "_act"
-        func = getattr(self, _func_name, None)
-        if func:
-            func()
 
     def idle_act(self):
         ret = cv_helper.get_multi_match('die_jingling', global_data.DEBUG_SIM_RATIO)

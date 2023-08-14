@@ -18,6 +18,7 @@ import event_mgr
 import effect_mgr
 import attack_bot
 import bot_mgr
+import pygame
 
 
 def cmd():
@@ -30,6 +31,7 @@ def init():
     global_data.EVENT_MGR = event_mgr.EventMgr()
     global_data.EFFECT_MGR = effect_mgr.EffectMgr()
     global_data.DLL_OPT = wnd_helper.WndHelper(const.DLL_PATH, CFG.process_cont, CFG.cls_cont, const.SCREEN_PATH)
+    global_data.CLOCK = pygame.time.Clock()
 
 
 def main():
@@ -48,6 +50,7 @@ def run_game():
         bot.tick()
         global_data.EVENT_MGR.update()
         dp.run_once()
+        global_data.CLOCK.tick(60)
 
     print('end')
 

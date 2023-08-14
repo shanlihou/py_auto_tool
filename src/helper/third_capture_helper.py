@@ -44,6 +44,7 @@ class ThirdCaptureHelper(object):
         self.screen.grabWindow(self._hwnd).save(const.SCREEN_PATH, 'png')
         cur_img = pygame.image.load(const.SCREEN_PATH)
         global_data.SCREEN_IMAGE_SIZE = cur_img.get_size()
+        global_data.ORIGIN_IMAGE = cur_img
         global_data.SCREEN_IMAGE_GAME = pygame.transform.scale(cur_img, global_data.SCREEN_SIZE)
 
         screen_img = cv2.imread(const.SCREEN_PATH)

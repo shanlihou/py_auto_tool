@@ -5,6 +5,7 @@ DONE = False
 SCREEN_SIZE = None
 EFFECT_MGR = None
 
+ORIGIN_IMAGE = None
 SCREEN_IMAGE_GAME = None
 SCREEN_IMAGE_SIZE = None
 
@@ -22,4 +23,9 @@ UI_MGR = None
 BOT_NAME = None
 
 CAPTURE = True
+
+DEBUG_TARGET = 'console_test'
+
+CLOCK = None
+
 

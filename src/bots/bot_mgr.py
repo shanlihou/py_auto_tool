@@ -8,7 +8,7 @@ class BotMgr(object):
         super(BotMgr, self).__init__()
         self.bot_name = None
         self.bot = None
-        self.change_bot('Attack')
+        self.change_bot('DebugBot')
 
     def change_bot(self, bot_name):
         for i in os.listdir('src/bots'):

@@ -14,6 +14,10 @@ class Editor(ui_base.UIBase):
         global_data.EVENT_MGR.register_cb(pygame.KEYDOWN, self.on_key_down)
 
     def on_mouse_down(self, pos):
+        if not self.is_visible:
+            self.is_active = False
+            return
+
         if self.is_pos_in(pos):
             self.is_active = True
         else:
@@ -28,15 +32,6 @@ class Editor(ui_base.UIBase):
             '-': '_',
         }.get(key, '')
 
-    def do_command(self, text):
-        try:
-            ret = exec(text)
-        except Exception as e:
-            ret = e
-
-        print(ret)
-        global_data.UI_MGR.get_ui(global_data.DBG_TEXT_ID).lines.append(str(ret))
-
     def on_key_down(self, key):
         if self.is_active:
             _key = pygame.key.name(key)
@@ -48,12 +43,10 @@ class Editor(ui_base.UIBase):
             elif key == pygame.K_SPACE:
                 self.text += ' '
             elif key == pygame.K_RETURN:
-                self.do_command(self.text)
+                self.on_return_press(self.text)
                 self.text = ""
             else:
                 self.text += _key
-
-        print(self.text)
 
     def draw(self, draw_ctx):
         _rect = utils.get_screen_rect(self.win_idx, self.rect)

@@ -5,7 +5,8 @@ import ui_text
 import choicer
 import global_data
 
-from custom_ui import cap_choicer
+
+from custom_ui import cap_choicer, custom_ana, ui_find_img, console_editor, pic_editor
 
 
 class UIMgr(object):
@@ -22,7 +23,7 @@ class UIMgr(object):
 
         # editor for debug
         _rect = (0.03, 0.04, 0.94, 0.1)
-        self.add_component(editor.Editor(1, _rect), 'dbg_editor')
+        self.add_component(console_editor.ConsoleEditor(1, _rect), 'dbg_editor')
 
         # text for debug
         _rect = (0.03, 0.16, 0.94, 0.7)
@@ -30,17 +31,29 @@ class UIMgr(object):
         self.add_component(_text, 'dbg_text')
         global_data.DBG_TEXT_ID = _text.id
 
-        # 
+        # captrue pages
+        _widget = custom_ana.CustomAna()
+        self.add_component(_widget, 'custom_ana')
 
+        # cap_choicer
         _cap_choices = ['run', 'stop']
         _cap_choice = cap_choicer.CapChoicer(1, (0.03, 0.03, 0.47, 0.1), _cap_choices, True)
         self.add_component(_cap_choice, 'cap_choice')
 
+        # find_img
+        _widget = ui_find_img.FindImg()
+        self.add_component(_widget, 'ui_find_img')
+
+        # pic editor
+        _rect = (0.03, 0.04, 0.47, 0.1)
+        _widget = pic_editor.PicEditor(1, _rect)
+        self.add_component(_widget, 'pic_editor')
+
         # init pages
         self.pages = {
             'console': ['dbg_editor', 'dbg_text'],
-            'color_picker': ['cap_choice'],
-            'ana': [],
+            'color_picker': ['cap_choice', 'custom_ana'],
+            'find_img': ['ui_find_img', 'pic_editor', 'sim'],
             'none': [],
         }
 
