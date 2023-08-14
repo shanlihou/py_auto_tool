@@ -21,22 +21,22 @@ class ThirdCaptureHelper(object):
 
     def get_wnd(self):
         _desk = win32gui.GetDesktopWindow()
-        _next = win32gui.GetWindow(_desk, win32con.GW_CHILD)
+        _next = win32gui.GetWindow(_desk, win32con.GW_CHILD) # 获取桌面第一个子窗口句柄
         _hwnd = None
         while 1:
             if not _next:
                 break
 
-            _text = win32gui.GetWindowText(_next)
-            _class_name = win32gui.GetClassName(_next)
-            if self._title in _text and self._cls_name in _class_name:
-                # utils.INFO(_text, _class_name, _next)
+            _text = win32gui.GetWindowText(_next) # 获取窗口标题
+            _class_name = win32gui.GetClassName(_next) # 获取窗口类名
+            if self._title in _text and self._cls_name in _class_name: # 判断窗口标题和类名是否符合
                 _hwnd = _next
                 break
 
-            _next = win32gui.GetWindow(_next, win32con.GW_HWNDNEXT)
+            _next = win32gui.GetWindow(_next, win32con.GW_HWNDNEXT) # 从上一个窗口句柄开始，获取下一个窗口句柄
 
         print(_hwnd)
+        # 
         self._hwnd = _hwnd
         global_data.HWND = _hwnd
 
