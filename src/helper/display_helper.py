@@ -19,17 +19,19 @@ class DisplayHelper(object):
 
         self.screen = screen
         self._ui_mgr = ui_mgr.UIMgr()
+        global_data.UI_MGR = self._ui_mgr
 
     def on_mouse_down(self, pos):
         global_data.EFFECT_MGR.add_click_effect(pos)
 
     def draw_capture(self):
+        self.screen.blit(global_data.SCREEN_IMAGE_GAME, (0, 0))
+
+    def draw_analyze(self):
         if global_data.CV_RESULT is None:
             return
 
         _size = global_data.SCREEN_IMAGE_SIZE
-        self.screen.blit(global_data.SCREEN_IMAGE_GAME, (0, 0))
-
         pts, w, h = global_data.CV_RESULT
         fix_w = w * global_data.SCREEN_SIZE[0] / _size[0]
         fix_h = h * global_data.SCREEN_SIZE[1] / _size[1]
@@ -40,9 +42,10 @@ class DisplayHelper(object):
 
     def run_once(self):
         # 填充窗口颜色
-        self.screen.fill((0x2e, 0x34, 0x40))
+        self.screen.fill(const.COLOR_BG)
         
         self.draw_capture()
+        self.draw_analyze()
         _ctx = draw_context.DrawContext(self.screen, global_data.SCREEN_SIZE)
         self._ui_mgr.draw(_ctx)
         global_data.EFFECT_MGR.draw(_ctx)

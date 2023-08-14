@@ -2,11 +2,12 @@ import pygame
 import utils
 import ui_base
 import global_data
+import pygame
+import const
 
 class Editor(ui_base.UIBase):
     def __init__(self, win_idx, rect):
-        self.rect = rect
-        self.win_idx = win_idx
+        super(Editor, self).__init__(win_idx, rect)
         self.is_active = False
         self.text = ""
         global_data.EVENT_MGR.register_cb(pygame.MOUSEBUTTONDOWN, self.on_mouse_down)
@@ -18,28 +19,56 @@ class Editor(ui_base.UIBase):
         else:
             self.is_active = False
 
+    def translate_with_shift(self, key):
+        if key.isalpha():
+            return key.upper()
+
+        return {
+            '=': '+',
+            '-': '_',
+        }.get(key, '')
+
+    def do_command(self, text):
+        try:
+            ret = exec(text)
+        except Exception as e:
+            ret = e
+
+        print(ret)
+        global_data.UI_MGR.get_ui(global_data.DBG_TEXT_ID).lines.append(str(ret))
+
     def on_key_down(self, key):
         if self.is_active:
+            _key = pygame.key.name(key)
+            if pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                _key = self.translate_with_shift(_key)
+
             if key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
+            elif key == pygame.K_SPACE:
+                self.text += ' '
             elif key == pygame.K_RETURN:
-                self.is_active = False
+                self.do_command(self.text)
+                self.text = ""
             else:
-                self.text += chr(key)
+                self.text += _key
 
         print(self.text)
 
     def draw(self, draw_ctx):
         _rect = utils.get_screen_rect(self.win_idx, self.rect)
         boder_width = 3 if self.is_active else 1
-        pygame.draw.rect(draw_ctx.screen, (0, 255, 0), _rect, boder_width)
-
+        pygame.draw.rect(draw_ctx.screen, const.COLOR_GREEN, _rect, boder_width, border_radius=10)
 
         x, y, w, h = _rect
 
-        font = utils.get_font(h)
-        text = font.render(self.text, True, (0, 0, 255), (0, 255, 0))
-        draw_ctx.screen.blit(text, (x + 5, y + 5))
+        off = 5
+
+        font_size = h - off * 2
+
+        font = utils.get_font(font_size)
+        text = font.render(self.text, True, const.COLOR_GREEN, const.COLOR_BG)
+        draw_ctx.screen.blit(text, (x + off, y + off))
 
 
 

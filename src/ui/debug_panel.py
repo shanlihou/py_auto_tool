@@ -1,11 +1,12 @@
 import pygame
 import global_data
 import utils
+import ui_base
 
 
-class DebugPanel(object):
+class DebugPanel(ui_base.UIBase):
     def __init__(self):
-        pass
+        super(DebugPanel, self).__init__(0, None)
 
     def draw(self, draw_ctx):
         font = utils.get_font(20)

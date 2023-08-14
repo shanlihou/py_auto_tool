@@ -2,6 +2,19 @@ import utils
 
 
 class UIBase(object):
+    def __init__(self, win_idx, rect):
+        super(UIBase, self).__init__()
+        self.win_idx = win_idx
+        self.rect = rect
+        self.id = 0
+        self.is_visible = True
+
+    def set_visible(self, is_visible):
+        self.is_visible = is_visible
+
+    def set_id(self, id):
+        self.id = id
+
     def is_pos_in(self, pos):
         _x = pos[0]
         _y = pos[1]

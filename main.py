@@ -17,7 +17,7 @@ import global_data
 import event_mgr
 import effect_mgr
 import attack_bot
-import deargui
+import bot_mgr
 
 
 def cmd():
@@ -32,7 +32,6 @@ def init():
     global_data.DLL_OPT = wnd_helper.WndHelper(const.DLL_PATH, CFG.process_cont, CFG.cls_cont, const.SCREEN_PATH)
 
 
-
 def main():
     init()
     run_game()
@@ -41,9 +40,11 @@ def run_game():
     dp = display_helper.DisplayHelper()
     opt = third_capture_helper.ThirdCaptureHelper(CFG.title_cont, CFG.cls_cont)
     # opt = wnd_helper.WndHelper('./dll/back_preview_dll.dll', 'warspear', 'Warspear', const.SCREEN_PATH)
-    bot = attack_bot.Attack()
+    bot = bot_mgr.BotMgr()
     while not global_data.DONE:
-        opt.capture()
+        if global_data.CAPTURE:
+            opt.capture()
+
         bot.tick()
         global_data.EVENT_MGR.update()
         dp.run_once()

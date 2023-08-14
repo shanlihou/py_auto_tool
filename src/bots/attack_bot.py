@@ -2,6 +2,7 @@ import utils
 import cv_helper
 import global_data
 import back_opt_helper as BOH
+import base_bot
 
 
 class State(object):
@@ -9,8 +10,9 @@ class State(object):
     ATTACKING = 1
 
 
-class Attack(object):
+class Attack(base_bot.BotBase):
     def __init__(self):
+        super(Attack, self).__init__()
         self._state = State.IDLE
 
     def tick(self):

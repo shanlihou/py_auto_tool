@@ -6,8 +6,7 @@ import utils
 
 class SimilarRatio(ui_base.UIBase):
     def __init__(self, win_idx, rect):
-        self.rect = rect
-        self.win_idx = win_idx
+        super(SimilarRatio, self).__init__(win_idx, rect)
         global_data.EVENT_MGR.register_cb(pygame.MOUSEBUTTONDOWN, self.on_mouse_down)
 
     def on_mouse_down(self, pos):

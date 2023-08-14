@@ -14,3 +14,12 @@ CV_RESULT = None
 
 HWND = None
 DLL_OPT = None
+
+DBG_TEXT_ID = None
+UI_MGR = None
+
+
+BOT_NAME = None
+
+CAPTURE = True
+
