@@ -21,6 +21,8 @@ class CustomAna(ui_base.UIBase):
 
         self.draw_color_rect = (0.53, 0.15, 0.4, 0.1)
 
+        self.color_count_pos = (0.03, 0.2)
+
     def on_mouse_down(self, pos):
         if not utils.is_pos_in_screen(pos):
             return
@@ -51,8 +53,16 @@ class CustomAna(ui_base.UIBase):
         color_rect = utils.get_screen_rect(self.win_idx, self.draw_color_rect)
         pygame.draw.rect(draw_ctx.screen, self.press_color, color_rect)
 
+        _count = 0
         for pos in cv_helper.get_color_poses(self.press_color):
             _pos = utils.back_pos_to_screen(pos)
             _rect = (_pos[0], _pos[1], 1, 1)
             pygame.draw.rect(draw_ctx.screen, const.COLOR_RED, _rect)
+            _count += 1
+
+        _text = 'count:{}'.format(_count)
+        text = font.render(_text, True, const.COLOR_GREEN)
+        _pos = utils.get_screen_pos(self.win_idx, self.color_count_pos)
+        draw_ctx.screen.blit(text, _pos)
+
 

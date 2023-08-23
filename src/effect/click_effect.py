@@ -10,7 +10,7 @@ class ClickEffect(object):
 
     def draw(self, draw_ctx):
         cur_time = pygame.time.get_ticks()
-        radius = (cur_time - self.start_time) / 1000 * 200
+        radius = (cur_time - self.start_time) / 1000 * 100
         if radius > 50:
             global_data.EFFECT_MGR.remove_effect(self.effect_id)
             return
